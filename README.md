@@ -18,15 +18,15 @@ For each protocol type i (DeFi, DEX, SocialFi), ranging from 30 days before to 3
 
 DeFi Protocols (Total Value Locked)
 
-***DeFi_it = α0i + α1iTt + α2iXt + α3iXtTt + α4iTt + α5itXt + δ*MCt + εit (1)***
+***DeFi_it = α0i + α1iTt + α2iXt + α3iXtTt + α4iTt + α5itXt + δ1*MCt + δ2FGIt +εit (1)***
 
 DEX/Bridge Protocols (Daily Transaction Volume)
 
-***DEXit = β0i + β1iTt + β2iXt + β3iXtTt + β4iTt + β5itXt + δMCt + εit (2)***
+***DEXit = β0i + β1iTt + β2iXt + β3iXtTt + β4iTt + β5itXt + δ1MCt + δ2FGIt + εit (2)***
 
 SocialFi Protocols (Daily Active Users)
 
-***SocialFi_it = γ0i + γ1iTt + γ2iXt + γ3iXtTt + γ4iTt + γ5itXt + δMCt + εit (3)***
+***SocialFi_it = γ0i + γ1iTt + γ2iXt + γ3iXtTt + γ4iTt + γ5itXt + δ1MCt + δ2FGIt +εit (3)***
 
 Where:
 
@@ -52,6 +52,10 @@ centered at the airdrop date (ranges from -30 to +30)
 
 ***MCt*** is the market capitalization of all altcoins at time t
 
-***δ***  is the coefficient for market capitalization
+**FGIt** is the Fear and Greed Index at time t
+
+***δ1***  is the coefficient for market capitalization
+
+***δ2***  is the coefficient for the Fear and Greed Index
 
 ***εi***  is the remaining error term
