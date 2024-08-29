@@ -38,26 +38,19 @@ centered at the airdrop date (ranges from -30 to +30)
 ***Xt*** is the intervention variable
 (0 for pre-airdrop, 1 for post-airdrop including airdrop day)
 
-***α0i, β0i, γ0i*** are
-the fixed effects
+***α0i, β0i, γ0i*** are the intercept
 
-***α1i, β1i, γ**1i* are
-the pre-intervention slopes for protocol type i
+***α1i, β1i, γ**1i* are the pre-intervention slopes for protocol type i
 
-***α2i, β2i, γ2i*** are
-the level changes after the airdrop for protocol type i
+***α2i, β2i, γ2i*** are the level changes after the airdrop for protocol type i
 
-***α3i, β3i, γ3**i* are
-the slope changes after the airdrop for protocol type i
+***α3i, β3i, γ3**i* are the slope changes after the airdrop for protocol type i
 
-**α4i, β4i, γ4i** are the coefficients
-for the time trend
+**α4i, β4i, γ4i** are the coefficients for the time trend
 
-**α5i, β5i, γ5i** are the coefficients
-for the interaction between time trend and intervention
+**α5i, β5i, γ5i** are the coefficients for the interaction between time trend and intervention
 
-***MCt*** is the market capitalization
-of all altcoins at time t
+***MCt*** is the market capitalization of all altcoins at time t
 
 ***δ***  is the coefficient for market capitalization
 
