@@ -1,4 +1,4 @@
-# Chain-anaylsis
+# **Airdrop campaigns as an incentive mechanism for early adoption of web3 applications**
 
 **Steps:**
 
