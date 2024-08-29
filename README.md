@@ -18,15 +18,15 @@ For each protocol type i (DeFi, DEX, SocialFi), ranging from 30 days before to 3
 
 DeFi Protocols (Total Value Locked)
 
-***DeFi_it = α0i + α1iTt + α2iXt + α3iXtTt + α4it + α5itXt + δ*MCt + εit (1)***
+***DeFi_it = α0i + α1iTt + α2iXt + α3iXtTt + α4iTt + α5itXt + δ*MCt + εit (1)***
 
 DEX/Bridge Protocols (Daily Transaction Volume)
 
-***DEXit = β0i + β1iTt + β2iXt + β3iXtTt + β4it + β5itXt + δMCt + εit (2)***
+***DEXit = β0i + β1iTt + β2iXt + β3iXtTt + β4iTt + β5itXt + δMCt + εit (2)***
 
 SocialFi Protocols (Daily Active Users)
 
-***SocialFi_it = γ0i + γ1iTt + γ2iXt + γ3iXtTt + γ4it + γ5itXt + δMCt + εit (3)***
+***SocialFi_it = γ0i + γ1iTt + γ2iXt + γ3iXtTt + γ4iTt + γ5itXt + δMCt + εit (3)***
 
 Where:
 
