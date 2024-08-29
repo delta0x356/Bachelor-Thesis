@@ -1,16 +1,14 @@
 # Chain-anaylsis
 
-
 **Steps:**
 
 Add on-chain data in the format Date: ***dd/mm/yyyyy*** and value of **TVL, DAU,Volume** in the corresponding directory
 
-**pip3 install pandas numpy scipy statsmodels**
+***pip3 install pandas numpy scipy statsmodels***
 
 ***python analysis.py***
 
 Retrieve the result from the folder result
-
 
 **Methodology:**
 
