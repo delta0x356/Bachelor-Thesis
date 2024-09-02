@@ -6,7 +6,7 @@ Add on-chain data in the format Date: ***dd/mm/yyyyy*** and value of **TVL, DAU,
 
 ***pip3 install pandas numpy scipy statsmodels***
 
-***python analysis.py***
+***python3 analysis.py***
 
 Retrieve the result from the folder result
 
