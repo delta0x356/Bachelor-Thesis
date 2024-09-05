@@ -5,7 +5,7 @@ from statsmodels.stats.stattools import durbin_watson
 import os
 from datetime import datetime, timedelta
 
-def prepare_data(file_path, metric_name, mc_data, fgi_data):
+def prepare_data(file_path, metric_name, mc_data, fgi_data, sp500_data):
     try:
         print(f"Processing file: {file_path}")
         df = pd.read_csv(file_path)
@@ -37,15 +37,23 @@ def prepare_data(file_path, metric_name, mc_data, fgi_data):
         extended_fgi_data = extended_fgi_data.rename(columns={'index': 'Date'})
         extended_fgi_data['Fear_Greed_Index'] = extended_fgi_data['Fear_Greed_Index'].ffill().bfill()
 
+        # Prepare S&P 500 data
+        extended_sp500_data = sp500_data[(sp500_data['Date'] >= start_date) & (sp500_data['Date'] <= end_date)]
+        extended_sp500_data = extended_sp500_data.set_index('Date').reindex(date_range).reset_index()
+        extended_sp500_data = extended_sp500_data.rename(columns={'index': 'Date'})
+        extended_sp500_data['Close'] = extended_sp500_data['Close'].ffill().bfill()
+
         # Merge all data
         df = pd.merge(df, extended_mc_data[['Date', 'MCt']], on='Date', how='left')
         df = pd.merge(df, extended_fgi_data[['Date', 'Fear_Greed_Index']], on='Date', how='left')
+        df = pd.merge(df, extended_sp500_data[['Date', 'Close']], on='Date', how='left')
 
         print(f"Final columns in df: {df.columns}")
         print(f"Date range: {df['Date'].min()} to {df['Date'].max()}")
         print(f"Airdrop date: {airdrop_date}")
         print(f"Market cap data available: {df['MCt'].notna().sum()} / {len(df)} days")
         print(f"Fear and Greed Index data available: {df['Fear_Greed_Index'].notna().sum()} / {len(df)} days")
+        print(f"S&P 500 data available: {df['Close'].notna().sum()} / {len(df)} days")
         print("First few rows of merged data:")
         print(df.head())
         print("\n")
@@ -57,7 +65,7 @@ def prepare_data(file_path, metric_name, mc_data, fgi_data):
 
 def fit_model(df, metric_name):
     try:
-        X = sm.add_constant(df[['T', 'X', 'X_T', 't', 't_X', 'MCt', 'Fear_Greed_Index']])
+        X = sm.add_constant(df[['T', 'X', 'X_T', 't', 't_X', 'MCt', 'Fear_Greed_Index', 'Close']])
         y = df[metric_name]
         model = sm.OLS(y, X).fit()
         return model
@@ -68,20 +76,22 @@ def fit_model(df, metric_name):
 def check_autocorrelation(model):
     return durbin_watson(model.resid)
 
-def analyze_protocol_type(folder_path, metric_name, protocol_type, mc_data, fgi_data):
+def analyze_protocol_type(folder_path, metric_name, protocol_type, mc_data, fgi_data, sp500_data):
     autocorrelation_results = []
     for file in os.listdir(folder_path):
         if file.endswith('.csv'):
             try:
                 file_path = os.path.join(folder_path, file)
-                df = prepare_data(file_path, metric_name, mc_data, fgi_data)
+                df = prepare_data(file_path, metric_name, mc_data, fgi_data, sp500_data)
                 model = fit_model(df, metric_name)
                 dw_statistic = check_autocorrelation(model)
 
                 autocorrelation_results.append({
                     'protocol': file.split('.')[0],
                     'Durbin-Watson statistic': dw_statistic,
-                    'Autocorrelation': 'Positive' if dw_statistic < 1.5 else ('Negative' if dw_statistic > 2.5 else 'No evidence')
+                    'Autocorrelation': 'Positive' if dw_statistic < 1.5 else ('Negative' if dw_statistic > 2.5 else 'No evidence'),
+                    'S&P 500 coefficient': model.params['Close'],
+                    'S&P 500 p-value': model.pvalues['Close']
                 })
             except Exception as e:
                 print(f"Error processing {file}: {str(e)}")
@@ -98,6 +108,11 @@ fgi_data = pd.read_csv('fear_greed_index.csv')
 fgi_data['Date'] = pd.to_datetime(fgi_data['Date'], format='%d/%m/%Y')
 print("Fear and Greed Index data loaded. Date range:", fgi_data['Date'].min(), "to", fgi_data['Date'].max())
 
+# Load S&P 500 data
+sp500_data = pd.read_csv('sp500.csv')
+sp500_data['Date'] = pd.to_datetime(sp500_data['Date'], format='%d/%m/%Y')
+print("S&P 500 data loaded. Date range:", sp500_data['Date'].min(), "to", sp500_data['Date'].max())
+
 # Analyze each protocol type
 protocol_types = [('TVL', 'TVL', 'DeFi'), ('volume', 'Volume', 'DEX'), ('DAU', 'DAU', 'SocialFi')]
 
@@ -108,7 +123,7 @@ if not os.path.exists(posterior_folder):
 
 for folder, metric, protocol_type in protocol_types:
     print(f"\nAutocorrelation analysis for {protocol_type}:")
-    results = analyze_protocol_type(folder, metric, protocol_type, mc_data, fgi_data)
+    results = analyze_protocol_type(folder, metric, protocol_type, mc_data, fgi_data, sp500_data)
 
     print(results)
 

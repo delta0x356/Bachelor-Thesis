@@ -1,4 +1,4 @@
-protocol,Durbin-Watson statistic,Autocorrelation
-phaver,0.7746647334927519,Positive
-Zora,1.300237919447526,Positive
-lens,1.3084518089022654,Positive
+protocol,Durbin-Watson statistic,Autocorrelation,S&P 500 coefficient,S&P 500 p-value
+phaver,1.0734440573715958,Positive,-5.926705974583793,0.000766301726004167
+Zora,1.3920172369628439,Positive,-29.83584881149742,0.16666485528919525
+lens,1.505733292652801,No evidence,-2.3677614776611833,0.017467563501213177

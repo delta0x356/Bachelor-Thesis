@@ -1,4 +1,4 @@
-protocol,Durbin-Watson statistic,Autocorrelation
-Izumi,1.3827364544863066,Positive
-jupiter,0.7772073582337136,Positive
-kyberswap,1.9730120632675099,No evidence
+protocol,Durbin-Watson statistic,Autocorrelation,S&P 500 coefficient,S&P 500 p-value
+Izumi,1.382537012125108,Positive,12574.188559245802,0.6634314945875617
+jupiter,0.8004878838173192,Positive,223696.18964516884,0.7925179738153905
+kyberswap,1.9782099011711787,No evidence,15619.941566235975,0.6834055852574931
